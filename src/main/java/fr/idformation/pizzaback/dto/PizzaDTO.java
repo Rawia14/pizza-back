@@ -22,8 +22,8 @@ public class PizzaDTO {
 	/** the pizza price. */
 	private Float price;
 
-	/** a list of user1 ids. */
-	private List<Short> user1s;
+	/** a list of order ids. */
+	private List<Short> orders;
 
 	/**
 	 *
@@ -102,14 +102,14 @@ public class PizzaDTO {
 		this.price = price;
 	}
 
-	public List<Short> getUser1s() {
+	public List<Short> getOrders() {
 		// TODO Auto-generated method stub
-		return user1s;
+		return orders;
 	}
 
-	public void setUser1s(List<Short> user1Ids) {
+	public void setOrders(List<Short> orders) {
 		// TODO Auto-generated method stub
-		this.user1s = user1s;
+		this.orders = orders;
 
 	}
 

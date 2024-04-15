@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.idformation.pizzaback.dto.PizzaDTO;
-import fr.idformation.pizzaback.mapper.PizzaMapper;
+import fr.idformation.pizzaback.dto.mapper.PizzaMapper;
 import fr.idformation.pizzaback.service.IPizzaService;
 
 @RestController

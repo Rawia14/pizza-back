@@ -1,6 +1,5 @@
 package fr.idformation.pizzaback.domain;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -18,7 +17,7 @@ public class Pizza {
 
 	/** unique Id of a pizza. */
 	@Id
-	@Column(name = "pizza_id")
+	@Column(name = "piz_id")
 	private Short id;
 
 	/** name of the pizza. */
@@ -39,9 +38,8 @@ public class Pizza {
 
 	/** types of the pizza. */
 	@ManyToMany
-	@JoinTable(name = "user", joinColumns = { @JoinColumn(name = "pizza_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "id") })
-	private Set<User1> user1s;
+	@JoinTable(name = "order_pizza", joinColumns = @JoinColumn(name = "ord_id"), inverseJoinColumns = @JoinColumn(name = "piz_id"))
+	private Set<Pizza> pizzas;
 
 	/**
 	 * Default constructor.
@@ -53,14 +51,14 @@ public class Pizza {
 	/**
 	 * @return the id
 	 */
-	public Short getpizza_Id() {
+	public Short getpiz_Id() {
 		return id;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setpizza_Id(Short id) {
+	public void setpiz_Id(Short id) {
 		this.id = id;
 	}
 
@@ -118,33 +116,6 @@ public class Pizza {
 	 */
 	public void setPrice(Float price) {
 		this.price = price;
-	}
-
-	public Set<User1> getUsers() {
-		return user1s;
-	}
-
-	public void setUsers(final Set<User1> user1s) {
-		this.user1s = user1s;
-	}
-
-	public void addUser(final User1 user1) {
-		if (user1s == null) {
-			user1s = new HashSet<>();
-		}
-
-		user1.addPizza(this);
-		user1s.add(user1);
-	}
-
-	public void removeUser(final User1 user1) {
-		if (user1s == null) {
-			return;
-		}
-
-		user1s.remove(user1);
-		user1.removePizza(this);
-
 	}
 
 }

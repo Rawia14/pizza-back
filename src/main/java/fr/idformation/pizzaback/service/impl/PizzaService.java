@@ -3,30 +3,35 @@ package fr.idformation.pizzaback.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import fr.idformation.pizzaback.domain.Pizza;
 import fr.idformation.pizzaback.repository.IPizzaRepository;
 import fr.idformation.pizzaback.service.IPizzaService;
 
+@Service
 public class PizzaService implements IPizzaService {
 
 	/** repository for the Pizza. */
-	@Autowired
-	private IPizzaRepository pizzaRepo;
+	private final IPizzaRepository pizzaRepo;
 
 	@Autowired
+	public PizzaService(IPizzaRepository pizzaRepo) {
+		this.pizzaRepo = pizzaRepo;
+	}
+
+	@Override
 	public List<Pizza> getAllPizzas() {
 		return pizzaRepo.findAll();
 	}
 
-	@Autowired
-	public Pizza getOne(final Short id) {
-		return pizzaRepo.getReferenceById(id);
+	@Override
+	public Pizza getOne(Short id) {
+		return pizzaRepo.findById(id).orElse(null);
 	}
 
 	@Override
 	public List<Pizza> getAllPizzasByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return pizzaRepo.findByNameStartingWith(name);
 	}
 }
