@@ -1,13 +1,11 @@
 package fr.idformation.pizzaback.domain;
 
-import java.util.Set;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,12 +14,13 @@ public class Line {
 
 	/** unique Id of a order_line. */
 	@Id
-	@Column(name = "order_line_id")
+	@Column(name = "id")
 	private Short id;
 
 	/** Id of the order. */
-	@Column(name = "ord_id")
-	private Short ord_id;
+	/**
+	 * @Column(name = "ord_id") private Short ord_id;
+	 */
 
 	/** Id of the pizza. */
 	@Column(name = "piz_id")
@@ -32,9 +31,9 @@ public class Line {
 	private String quantity;
 
 	/** the order_line */
-	@ManyToMany
-	@JoinTable(name = "order_order_line", joinColumns = @JoinColumn(name = "ord_id"), inverseJoinColumns = @JoinColumn(name = "order_line_id"))
-	private Set<Order> order;
+	@ManyToOne
+	@JoinTable(name = "order", joinColumns = @JoinColumn(name = "ord_id"), inverseJoinColumns = @JoinColumn(name = "id"))
+	private Order order;
 
 	/**
 	 * Default constructor.
@@ -61,16 +60,16 @@ public class Line {
 	/**
 	 * @return the ord_id
 	 */
-	public Short getOrd_id() {
-		return ord_id;
-	}
+	/**
+	 * public Short getOrd_id() { return ord_id; }
+	 */
 
 	/**
 	 * @param ord_id the ord_id to set
 	 */
-	public void setOrd_id(Short ord_id) {
-		this.ord_id = ord_id;
-	}
+	/**
+	 * public void setOrd_id(Short ord_id) { this.ord_id = ord_id; }
+	 */
 
 	/**
 	 * @return the piz_id
@@ -103,14 +102,14 @@ public class Line {
 	/**
 	 * @return the order
 	 */
-	public Set<Order> getOrder() {
+	public Order getOrder() {
 		return order;
 	}
 
 	/**
 	 * @param order the order to set
 	 */
-	public void setOrder(Set<Order> order) {
+	public void setOrder(Order order) {
 		this.order = order;
 	}
 }

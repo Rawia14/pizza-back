@@ -1,14 +1,10 @@
 package fr.idformation.pizzaback.domain;
 
 import java.util.Date;
-import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -32,12 +28,6 @@ public class Order {
 	/** total of the order. */
 	@Column(name = "total_amount")
 	private Float total_amount;
-
-	/** orders of users. */
-	@ManyToMany
-	@JoinTable(name = "pizza", joinColumns = { @JoinColumn(name = "piz_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "ord_id") })
-	private Set<Pizza> pizza;
 
 	/**
 	 * Default constructor.
@@ -100,30 +90,6 @@ public class Order {
 	 */
 	public void setTotal_amount(Float total_amount) {
 		this.total_amount = total_amount;
-	}
-
-	/**
-	 * @return the pizza
-	 */
-	public Set<Pizza> getPizza() {
-		return pizza;
-	}
-
-	/**
-	 * @param pizza the pizza to set
-	 */
-	public void setPizza(Set<Pizza> pizza) {
-		this.pizza = pizza;
-	}
-
-	public void addOrder(Pizza pizza2) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void removeOrder(Pizza pizza2) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

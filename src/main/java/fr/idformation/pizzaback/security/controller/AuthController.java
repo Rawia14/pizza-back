@@ -1,42 +1,36 @@
 package fr.idformation.pizzaback.security.controller;
 
-import java.sql.SQLException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.idformation.pokedex.security.Dto.JwtResponse;
-import fr.idformation.pokedex.security.Dto.LoginRequest;
-import fr.idformation.pokedex.security.Dto.TokenRefreshRequest;
-import fr.idformation.pokedex.security.Dto.TokenRefreshResponse;
-import fr.idformation.pokedex.security.Dto.UserDto;
-import fr.idformation.pokedex.security.jwt.JwtProvider;
-import fr.idformation.pokedex.security.jwt.exception.TokenRefreshException;
-import fr.idformation.pokedex.security.models.RefreshToken;
-import fr.idformation.pokedex.security.models.User;
-import fr.idformation.pokedex.security.service.IRefreshTokenService;
-import fr.idformation.pokedex.security.service.impl.UserDetailsServiceImpl;
+import fr.idformation.pizzaback.security.Dto.JwtResponse;
+import fr.idformation.pizzaback.security.Dto.LoginRequest;
+import fr.idformation.pizzaback.security.Dto.TokenRefreshRequest;
+import fr.idformation.pizzaback.security.Dto.TokenRefreshResponse;
+import fr.idformation.pizzaback.security.Dto.UserDto;
+import fr.idformation.pizzaback.security.jwt.JwtProvider;
+import fr.idformation.pizzaback.security.jwt.exception.TokenRefreshException;
+import fr.idformation.pizzaback.security.models.RefreshToken;
+import fr.idformation.pizzaback.security.models.User;
+import fr.idformation.pizzaback.security.service.IRefreshTokenService;
+import fr.idformation.pizzaback.security.service.impl.UserDetailsServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 /**
  * Classe permettant de gérer la sécurité.
  *
- * @author piot
+ * @author Rawia
  *
  */
 
@@ -53,7 +47,6 @@ public final class AuthController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
-	/** import jwtprovider. */
 	@Autowired
 	private JwtProvider tokenProvider;
 
@@ -107,21 +100,6 @@ public final class AuthController {
 							tokenProvider.getExpiryDate(jwt), refreshToken.getToken()));
 				})
 				.orElseThrow(() -> new TokenRefreshException(requestRefreshToken, "Refresh token is not in database!"));
-	}
-
-	/**
-	 *
-	 * @param username a username
-	 * @return the profile picture of the user
-	 * @throws SQLException
-	 */
-	@GetMapping(value = "/picture/{username}", produces = MediaType.IMAGE_PNG_VALUE)
-	public ResponseEntity<InputStreamResource> getPicture(@PathVariable("username") final String username)
-			throws SQLException {
-		User user = userService.loadUserDetails(username);
-
-		return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG)
-				.body(new InputStreamResource(user.getPicture().getBinaryStream()));
 	}
 
 	/**

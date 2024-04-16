@@ -28,7 +28,7 @@ public class LineMapper {
 			dto = new LineDTO();
 
 			dto.setId(Line.getId());
-			dto.setOrd_id(Line.getOrd_id());
+			// dto.setOrd_id(Line.getOrd_id());
 			dto.setPiz_id(Line.getPiz_id());
 			dto.setQuantity(Line.getQuantity());
 

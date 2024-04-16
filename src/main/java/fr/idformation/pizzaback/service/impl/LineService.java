@@ -1,7 +1,6 @@
 package fr.idformation.pizzaback.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ public class LineService implements ILineService {
 
 	@Override
 	public Line getOne(Short id) {
-		Optional<Line> optionalLine = lineRepo.findById(id);
-		return optionalLine.orElse(null);
+		return lineRepo.findById(id);
+
 	}
 }
