@@ -81,9 +81,4 @@ public class OrderDTO {
 		this.total_amount = total_amount;
 	}
 
-	public void setUsr_id1(Short usr_id2) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

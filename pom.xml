@@ -73,11 +73,7 @@
 			<artifactId>jjwt-gson</artifactId>
 			<version>0.11.5</version>
 		</dependency>
-		<dependency>
-			<groupId>fr.idformation</groupId>
-			<artifactId>pokedex</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+		
 	</dependencies>
 
 	<build>

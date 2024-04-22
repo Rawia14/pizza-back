@@ -1,7 +1,5 @@
 package fr.idformation.pizzaback.security.repository;
 
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,11 +9,11 @@ import fr.idformation.pizzaback.security.models.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
 	/**
-	 * find a user from its login.
+	 * Enregistre un nouvel utilisateur.
 	 *
-	 * @param username the login
-	 * @return an optional user if found
+	 * @param user l'utilisateur à enregistrer
+	 * @return l'utilisateur enregistré
 	 */
-	Optional<User> findByUsername(String username);
+	User save(User user);
 
 }

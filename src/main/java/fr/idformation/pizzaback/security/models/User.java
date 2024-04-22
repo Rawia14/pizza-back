@@ -3,8 +3,7 @@ package fr.idformation.pizzaback.security.models;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.lang.NonNull;
-
+import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -18,64 +17,50 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = "username"),
-		@UniqueConstraint(columnNames = "email") })
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "phonenumber"))
 public class User {
-	/** technical id. */
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
 
-	/** username aka login. */
 	@NonNull
 	@Column(name = "phonenumber")
 	private String username = "...";
 
-	/** email. */
-
-	/** password. */
 	@NonNull
 	private String password = "...";
 
-	/** firstname. */
 	@NonNull
 	private String firstname = "...";
 
-	/** lastname. */
 	@NonNull
 	private String lastname = "...";
 
-	/** profile picture. */
+	@NonNull
+	private String address = "...";
 
 	/** roles of the user. */
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
 	/**
-	 * Default constructor.
+	 * @ManyToMany(mappedBy = "users") private Set<Role> roles;
 	 */
+
 	public User() {
 	}
 
-	/**
-	 * Construct a new User.
-	 *
-	 * @param pUsername the username
-	 * @param pEmail    the email
-	 * @param pPassword the password
-	 */
-	public User(final String pUsername, final String pPassword) {
-		this.username = pUsername;
-		this.password = pPassword;
-	}
+	public User(final String pUsername, String phonenumber, String password, String firstname, String lastname,
+			String address, String confirmPassword) {
 
-	/**
-	 * @return the firstname
-	 */
-	public String getFirstname() {
-		return firstname;
+		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.address = address;
+		this.username = pUsername;
 	}
 
 	/**
@@ -86,10 +71,10 @@ public class User {
 	}
 
 	/**
-	 * @return the lastname
+	 * @param id the id to set
 	 */
-	public String getLastname() {
-		return lastname;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	/**
@@ -100,8 +85,53 @@ public class User {
 	}
 
 	/**
-	 * @return the picture
+	 * @param password the password to set
 	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * @return the firstname
+	 */
+	public String getFirstname() {
+		return firstname;
+	}
+
+	/**
+	 * @param firstname the firstname to set
+	 */
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	/**
+	 * @return the lastname
+	 */
+	public String getLastname() {
+		return lastname;
+	}
+
+	/**
+	 * @param lastname the lastname to set
+	 */
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	/**
+	 * @return the address
+	 */
+	public String getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
 	/**
 	 * @return the roles
@@ -111,60 +141,15 @@ public class User {
 	}
 
 	/**
-	 * @return the name of the user
+	 * @param roles the roles to set
 	 */
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
 	public String getUsername() {
-		return username;
-	}
-
-	/**
-	 * @param pEmail the email to set
-	 */
-
-	/**
-	 * @param pFirstname the firstname to set
-	 */
-	public void setFirstname(final String pFirstname) {
-		this.firstname = pFirstname;
-	}
-
-	/**
-	 * @param pId the id to set
-	 */
-	public void setId(final Long pId) {
-		this.id = pId;
-	}
-
-	/**
-	 * @param pLastname the lastname to set
-	 */
-	public void setLastname(final String pLastname) {
-		this.lastname = pLastname;
-	}
-
-	/**
-	 * @param pPassword the password to set
-	 */
-	public void setPassword(final String pPassword) {
-		this.password = pPassword;
-	}
-
-	/**
-	 * @param pPicture the picture to set
-	 */
-
-	/**
-	 * @param pRoles the roles to set
-	 */
-	public void setRoles(final Set<Role> pRoles) {
-		this.roles = pRoles;
-	}
-
-	/**
-	 * @param pUsername the username to set
-	 */
-	public void setUsername(final String pUsername) {
-		this.username = pUsername;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

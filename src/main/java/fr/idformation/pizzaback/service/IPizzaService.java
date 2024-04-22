@@ -13,14 +13,4 @@ public interface IPizzaService {
 
 	List<Pizza> getAllPizzas();
 
-	/**
-	 * Find a pizza from its id.
-	 *
-	 * @param id the id of the pizza
-	 * @return the pizza with the given id
-	 */
-	Pizza getOne(Short id);
-
-	List<Pizza> getAllPizzasByName(String name);
-
 }

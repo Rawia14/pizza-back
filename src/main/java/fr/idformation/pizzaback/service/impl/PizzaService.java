@@ -25,13 +25,4 @@ public class PizzaService implements IPizzaService {
 		return pizzaRepo.findAll();
 	}
 
-	@Override
-	public Pizza getOne(Short id) {
-		return pizzaRepo.findById(id).orElse(null);
-	}
-
-	@Override
-	public List<Pizza> getAllPizzasByName(String name) {
-		return pizzaRepo.findByNameStartingWith(name);
-	}
 }

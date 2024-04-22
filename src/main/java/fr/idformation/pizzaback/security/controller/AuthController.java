@@ -7,7 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +36,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin("http://localhost")
+
 public final class AuthController {
 
 	/** token header to use in JWT. */
@@ -80,6 +80,39 @@ public final class AuthController {
 
 		return ResponseEntity.ok(new JwtResponse(tokenHeader + " " + jwt, tokenProvider.getExpiryDate(jwt),
 				new UserDto(user), refreshToken.getToken()));
+	}
+
+	@PostMapping("/signup")
+	public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
+		// Vérifiez si le nom d'utilisateur est déjà pris
+		if (userService.existsByUsername(signUpRequest.getUsername())) {
+			return ResponseEntity.badRequest().body("Error: Username is already taken!");
+		}
+
+		// Encodez le mot de passe avec BCrypt
+		String encodedPassword = new BCryptPasswordEncoder().encode(signUpRequest.getPassword());
+
+		// Créez un nouvel utilisateur avec les informations fournies
+		User user = new User();
+		user.setFirstname(signUpRequest.getUsername());
+		user.setLastname(signUpRequest.getLastname());
+		user.setPassword(encodedPassword);
+		user.setAddress(signUpRequest.getAddress());
+
+		// Sauvegardez les détails de l'utilisateur
+		userService.save(user);
+
+		userService.addUserToRole(user.getId(), Long.valueOf(1));
+
+		// Générez le token JWT
+		String jwt = tokenProvider.generateToken(signUpRequest.getUsername());
+
+		// Créez le refresh token
+		RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId());
+
+		// Retournez la réponse avec le token JWT et le refresh token
+		return ResponseEntity
+				.ok(new JwtResponse(jwt, tokenProvider.getExpiryDate(jwt), new UserDto(user), refreshToken.getToken()));
 	}
 
 	/**

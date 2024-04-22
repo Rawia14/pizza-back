@@ -16,11 +16,8 @@ public class UserDto {
 	/** the lastname. */
 	private String lastname;
 
-	/** the role of te user. */
+	/** the role of the user. */
 	private String role;
-
-	/** Has the user a profile picture? */
-	private boolean hasPicture;
 
 	/** Default constructor. */
 	public UserDto() {
@@ -36,7 +33,11 @@ public class UserDto {
 		this.username = pUser.getUsername();
 		this.firstname = pUser.getFirstname();
 		this.lastname = pUser.getLastname();
-		this.role = pUser.getRoles().iterator().next().getName().name();
+		if (!pUser.getRoles().isEmpty()) {
+			this.role = pUser.getRoles().iterator().next().getName().name();
+		} else {
+			this.role = "No Role"; // Ou tout autre valeur par dÃ©faut
+		}
 
 	}
 
@@ -66,13 +67,6 @@ public class UserDto {
 	 */
 	public String getUsername() {
 		return username;
-	}
-
-	/**
-	 * @return the hasPicture
-	 */
-	public boolean isHasPicture() {
-		return hasPicture;
 	}
 
 	/**

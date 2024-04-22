@@ -1,7 +1,5 @@
 package fr.idformation.pizzaback.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,16 +10,12 @@ import fr.idformation.pizzaback.service.IOrderService;
 @Service
 public class OrderService implements IOrderService {
 
-	/** repository for the orders. */
-	private final IOrderRepository orderRepo;
-
 	@Autowired
-	public OrderService(IOrderRepository orderRepo) {
-		this.orderRepo = orderRepo;
-	}
+	private IOrderRepository orderRepository;
 
 	@Override
-	public List<Order> getAll() {
-		return orderRepo.findAll();
+	public Order save(Order order) {
+		return orderRepository.save(order);
 	}
+
 }

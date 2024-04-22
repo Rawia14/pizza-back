@@ -17,7 +17,7 @@ public class Pizza {
 
 	/** unique Id of a pizza. */
 	@Id
-	@Column(name = "piz_id")
+	@Column(name = "id")
 	private Short id;
 
 	/** name of the pizza. */
